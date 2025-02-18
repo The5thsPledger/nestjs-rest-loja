@@ -1,18 +1,15 @@
 import {
-  BadRequestException,
   Body,
   Controller,
   Delete,
   Get,
-  NotFoundException,
   Param,
   Post,
   Put,
 } from '@nestjs/common';
 import { AtualizaUsuarioDTO } from './dto/AtualizaUsuario.dto';
-import { CriaUsuarioDTO } from './dto/CriaUsuario.dto';
-import { ListaUsuarioDTO } from './dto/ListaUsuario.dto';
-import { UsuarioService } from './usuario.service';
+import { CriaUsuarioDTO }     from './dto/CriaUsuario.dto';
+import { UsuarioService }     from './usuario.service';
 
 @Controller('/usuarios')
 export class UsuarioController {

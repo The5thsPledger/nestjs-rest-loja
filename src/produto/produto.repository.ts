@@ -5,13 +5,13 @@ import { ProdutoEntity } from './produto.entity';
 export class ProdutoRepository {
   private produtos: ProdutoEntity[] = [];
 
-  listaTodos() {
-    return this.produtos;
-  }
-
-  salva(dadosProduto: ProdutoEntity) {
+  salvar(dadosProduto: ProdutoEntity) {
     this.produtos.push(dadosProduto);
     return dadosProduto;
+  }
+
+  listarTodos() {
+    return this.produtos;
   }
 
   private buscaPorId(id: string) {
@@ -24,7 +24,7 @@ export class ProdutoRepository {
     return possivelProduto;
   }
 
-  async atualiza(id: string, dadosProduto: Partial<ProdutoEntity>) {
+  async atualizar(id: string, dadosProduto: Partial<ProdutoEntity>) {
     const dadosNaoAtualizaveis = ['id', 'usuarioId'];
     const produto = this.buscaPorId(id);
     Object.entries(dadosProduto).forEach(([chave, valor]) => {
@@ -37,7 +37,7 @@ export class ProdutoRepository {
     return produto;
   }
 
-  async remove(id: string) {
+  async remover(id: string) {
     const produtoRemovido = this.buscaPorId(id);
     this.produtos = this.produtos.filter((produto) => produto.id !== id);
     return produtoRemovido;
