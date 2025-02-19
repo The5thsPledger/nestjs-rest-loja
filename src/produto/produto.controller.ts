@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 
 import { AtualizaProdutoDTO } from './dto/atualizaProduto.dto';
@@ -22,8 +23,41 @@ export class ProdutoController {
   }
 
   @Get()
-  async listarTodos() {
-    return await this.produtoService.listarTodos();
+  async listarTodos(
+    @Query('categoria') categoria?: string,
+    @Query('minValor')  minValor? : string,
+    @Query('maxValor')  maxValor? : string,
+    @Query('page')      page?     : string,
+    @Query('limite')    limite?   : string
+  ) {
+    try {
+      let minValorNumber : number = minValor? parseFloat(minValor) : null
+      if(isNaN(minValorNumber)) {
+        minValorNumber = null;
+      }
+      
+      let maxValorNumber : number = maxValor? parseFloat(maxValor) : null
+      if(isNaN(maxValorNumber)) {
+        maxValorNumber = null;
+      }
+      
+      let pageNumber : number = page? parseInt(page) : 1
+      if(isNaN(pageNumber)) {
+        pageNumber = 1;
+      }
+      
+      let limiteNumber : number = limite? parseInt(limite) : 10
+      if(isNaN(limiteNumber)) {
+        limiteNumber = 10;
+      }
+      
+      return await this.produtoService.listarTodos(
+        categoria, minValorNumber, maxValorNumber, pageNumber, limiteNumber
+      );
+    }
+    catch (exception) {
+      throw exception
+    }
   }
 
   @Put('/:id')

@@ -11,12 +11,37 @@ export class ProdutoRepository {
     return dadosProduto;
   }
 
-  listarTodos() {
-    if (this.produtos.length > 0) {
-      return this.produtos;
+  listarTodos(
+    categoria?: string, minValor?: number, maxValor?: number, page: number = 1, limite: number = 10
+  ) {
+    if (this.produtos.length == 0) {
+      throw new NotFoundException("Nenhum produto foi criado");
     }
     else {
-      throw new NotFoundException("Nenhum produto criado");
+      const lista = this.produtos.sort().filter(
+        (produto) => {
+          if (categoria) {
+            if (produto.categoria != categoria) {
+              return false
+            }
+          }
+          if (minValor) {
+            if (produto.valor < minValor) {
+              return false
+            }
+          }
+          if (maxValor) {
+            if (produto.valor > maxValor) {
+              return false
+            }
+          }
+          return true
+        }
+      )
+      if (lista.length == 0) {
+        throw new NotFoundException("Não foram encontrados produtos no filtro selecionado")
+      }
+      return lista.slice(limite*(page-1),limite*(page-1)+limite);
     }
   }
 

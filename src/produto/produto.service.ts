@@ -36,9 +36,20 @@ export class ProdutoService {
         }
     }
     
-    async listarTodos() {
+    async listarTodos(
+        categoria?: string, minValor?: number, maxValor?: number, page: number = 1, limite: number = 10
+    ) {
         try {
-            return this.produtoRepository.listarTodos();
+            const lista = this.produtoRepository.listarTodos(categoria, minValor, maxValor, page, limite);
+            if (lista.length > 0) {
+                return lista
+            }
+            else {
+                throw new NotFoundException(
+                    "A página solicitada não possui produtos no filtro selecionado. " + 
+                    "Escolha uma página menor para receber os resultados da busca"
+                )
+            }
         }
         catch (exception) {
             if (exception instanceof BadRequestException) {
