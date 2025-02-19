@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { ProdutoEntity } from './produto.entity';
+import { error } from 'console';
 
 @Injectable()
 export class ProdutoRepository {
@@ -11,14 +12,19 @@ export class ProdutoRepository {
   }
 
   listarTodos() {
-    return this.produtos;
+    if (this.produtos.length > 0) {
+      return this.produtos;
+    }
+    else {
+      throw new NotFoundException("Nenhum produto criado");
+    }
   }
 
   private buscaPorId(id: string) {
     const possivelProduto = this.produtos.find((produto) => produto.id === id);
 
     if (!possivelProduto) {
-      throw new Error('Produto não existe');
+      throw new NotFoundException('Produto não existe');
     }
 
     return possivelProduto;

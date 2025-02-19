@@ -20,7 +20,7 @@ export class UsuarioService {
             this.usuarioRepository.salvar(usuarioEntity);
             return {
                 usuario: new ListaUsuarioDTO(usuarioEntity.id, usuarioEntity.nome),
-                messagem: 'usuário criado com sucesso',
+                messagem: 'Usuário criado com sucesso',
             };
         }
         catch(exception) {
@@ -28,7 +28,7 @@ export class UsuarioService {
                 throw exception
             }
             return {
-                mensagem: 'erro ao criar usuário: ' + exception.message
+                mensagem: 'Erro inesperado ao criar usuário: ' + exception.message
             }
         }
     }
@@ -44,7 +44,7 @@ export class UsuarioService {
                 throw exception
             }
                 return {
-                mensagem : 'erro ao resgatar usuários: ' + exception.message
+                mensagem : 'Erro inesperado ao listar usuários: ' + exception.message
             }
         }
     }
@@ -53,7 +53,7 @@ export class UsuarioService {
         try {
             return {
                 usuario: await this.usuarioRepository.atualiza(id, dadosDeAtualizacao),
-                messagem: 'usuário atualizado com sucesso',
+                messagem: 'Usuário atualizado com sucesso',
             };
         }
         catch(exception) {
@@ -64,7 +64,7 @@ export class UsuarioService {
             throw exception
           }
           return {
-            mensagem: 'erro ao atualizar o usuário: ' + exception.message
+            mensagem: 'Erro inesperado ao atualizar o usuário: ' + exception.message
           }
         }
     }
@@ -73,7 +73,7 @@ export class UsuarioService {
         try {
             return {
                 usuario: await this.usuarioRepository.remove(id),
-                messagem: 'usuário removido com sucesso',
+                messagem: 'Usuário removido com sucesso',
               };
         }
         catch(exception) {
@@ -84,7 +84,7 @@ export class UsuarioService {
             throw exception
             }
             return {
-            mensagem: 'erro ao deletar usuário: ' + exception.message
+            mensagem: 'Erro inesperado ao deletar usuário: ' + exception.message
             }
         }
     }
